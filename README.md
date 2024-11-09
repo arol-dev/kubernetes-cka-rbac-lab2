@@ -70,11 +70,15 @@ Las VMs consisten en:
 
 1. Crear el Namespace `rbac-dev`
 
-Ejecuta el siguiente comando para crear el namespace `rbac-dev`:
-
-
+```bash
+kubectl create namespace rbac-dev
+```
 
 Verifica que se haya generado automáticamente una ServiceAccount por defecto en el namespace `rbac-dev`:
+
+```bash
+kubectl get serviceaccount -n rbac-dev
+```
 
 
 ### Paso 4: Configuración de Roles y RoleBindings en `rbac-dev`
@@ -93,13 +97,13 @@ rules:
 - apiGroups: [""]
   resources: ["pods", "configmaps"]
   verbs: ["create", "get", "list"]
-```{{copy}}
+```
 
 2. Aplica el Role al clúster:
 
 ```bash
 kubectl apply -f role-configmap-pod.yaml
-```{{exec}}
+```
 
 ### Paso 5: Crear un RoleBinding para Vincular el Role al ServiceAccount `default`
 
@@ -119,13 +123,13 @@ roleRef:
   kind: Role
   name: configmap-pod-manager
   apiGroup: rbac.authorization.k8s.io
-```{{copy}}
+```
 
 2. Aplica el RoleBinding:
 
 ```bash
 kubectl apply -f rolebinding-configmap-pod.yaml
-```{{exec}}
+```
 
 Este RoleBinding vincula el Role `configmap-pod-manager` con la cuenta ServiceAccount `default` en el namespace `rbac-dev`.
 
@@ -137,13 +141,13 @@ Ejecuta el siguiente comando para crear el namespace `rbac-qa`:
 
 ```bash
 kubectl create namespace rbac-qa
-```{{exec}}
+```
 
 2. Verifica que se haya generado una ServiceAccount por defecto en el namespace `rbac-qa`:
 
 ```bash
 kubectl get serviceaccount -n rbac-qa
-```{{exec}}
+```
 
 ### Paso 7: Crear un ClusterRole para Leer Secrets en Todo el Clúster
 
@@ -158,13 +162,13 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["get", "list"]
-```{{copy}}
+```
 
 2. Aplica el ClusterRole al clúster:
 
 ```bash
 kubectl apply -f clusterrole-secret.yaml
-```{{exec}}
+```
 
 ### Paso 8: Crear un ClusterRoleBinding para Vincular el ClusterRole al ServiceAccount `default` en `rbac-qa`
 
@@ -183,13 +187,13 @@ roleRef:
   kind: ClusterRole
   name: secret-reader
   apiGroup: rbac.authorization.k8s.io
-```{{copy}}
+```
 
 2. Aplica el ClusterRoleBinding:
 
 ```bash
 kubectl apply -f clusterrolebinding-secret.yaml
-```{{exec}}
+```
 
 Este ClusterRoleBinding vincula el ClusterRole `secret-reader` con la ServiceAccount `default` en el namespace `rbac-qa`.
 
@@ -201,43 +205,43 @@ Despliega un pod usando la imagen `luksa/kubectl-proxy` en el namespace `rbac-de
 
 ```bash
 kubectl run test --image=luksa/kubectl-proxy -n rbac-dev
-```{{exec}}
+```
 
 Confirma que el pod se ha desplegado correctamente:
 
 ```bash
 kubectl get pods -n rbac-dev
-```{{exec}}
+```
 
 2. Conéctate al pod:
 
 ```bash
 kubectl exec -it test -n rbac-dev -- sh
-```{{exec}}
+```
 
 3. Ejecuta una solicitud HTTP para verificar los pods en el namespace `rbac-dev`:
 
 ```bash
 curl localhost:8001/api/v1/namespaces/rbac-dev/pods
-```{{exec}}
+```
 
 4. Para probar la creación de un nuevo pod, crea un archivo `pod.yaml` con una definición básica de un pod de Nginx. Luego ejecuta la solicitud POST:
 
 ```bash
 curl -X POST --data-binary "@pod.yaml" -H 'Content-Type: application/yaml' localhost:8001/api/v1/namespaces/rbac-dev/pods
-```{{exec}}
+```
 
 5. Intenta eliminar el pod y verifica que se reciba un error 403 "Forbidden", lo que indica que la cuenta de servicio en `rbac-dev` no tiene permisos para eliminar pods:
 
 ```bash
 curl -X DELETE localhost:8001/api/v1/namespaces/rbac-dev/pods/nginx-basic
-```{{exec}}
+```
 
 6. Verifica que el pod `nginx-basic` existe en el namespace `rbac-dev`:
 
 ```bash
 kubectl get pods -n rbac-dev
-```{{exec}}
+```
 
 ### Paso 10: Verificación de Permisos en `rbac-qa`
 
@@ -247,25 +251,25 @@ Despliega un pod usando la imagen `luksa/kubectl-proxy` en el namespace `rbac-qa
 
 ```bash
 kubectl run test --image=luksa/kubectl-proxy -n rbac-qa
-```{{exec}}
+```
 
 Confirma que el pod se ha desplegado correctamente:
 
 ```bash
 kubectl get pods -n rbac-qa
-```{{exec}}
+```
 
 2. Conéctate al pod:
 
 ```bash
 kubectl exec -it test -n rbac-qa -- sh
-```{{exec}}
+```
 
 3. Para verificar los permisos asociados con el ClusterRole `secret-reader`, ejecuta la siguiente solicitud HTTP para obtener los secrets en el clúster:
 
 ```bash
 curl localhost:8001/api/v1/secrets
-```{{exec}}
+```
 
 Deberías ver la lista de secrets definidos en el clúster de Kubernetes, lo cual confirma que el ClusterRole permite el acceso a nivel global para leer secrets.
 
