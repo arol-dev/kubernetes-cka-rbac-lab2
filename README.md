@@ -72,15 +72,10 @@ Las VMs consisten en:
 
 Ejecuta el siguiente comando para crear el namespace `rbac-dev`:
 
-```bash
-kubectl create namespace rbac-dev
-```{{exec}}
+
 
 Verifica que se haya generado automáticamente una ServiceAccount por defecto en el namespace `rbac-dev`:
 
-```bash
-kubectl get serviceaccount -n rbac-dev
-```{{exec}}
 
 ### Paso 4: Configuración de Roles y RoleBindings en `rbac-dev`
 
