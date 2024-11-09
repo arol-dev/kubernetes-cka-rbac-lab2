@@ -19,7 +19,6 @@ Sigue cada sección en el orden indicado para completar con éxito el laboratori
 5. **Asociar roles de clúster a cuentas específicas mediante ClusterRoleBindings**: Usar ClusterRoleBindings para asignar permisos de clúster a ServiceAccounts en namespaces específicos.
 6. **Verificar permisos y limitaciones mediante pruebas prácticas**: Desplegar pods y realizar solicitudes HTTP para verificar los permisos aplicados, asegurando que las ServiceAccounts tengan acceso limitado a los recursos definidos.
 
-
 ## Contenido del Repositorio
 
 Este repositorio incluye:
@@ -37,8 +36,8 @@ Las VMs consisten en:
 1. Clona el repositorio en tu entorno local:
 
    ```bash
-   git clone https://github.com/arol-dev/kubernetes-cka-rbac.git
-   cd kubernetes-cka-backup-recovery-rbac
+   git clone https://github.com/arol-dev/kubernetes-cka-rbac-lab2
+   cd kubernetes-cka-backup-recovery-rbac-lab2
    ```
 
 2. Dentro del repositorio, ejecuta el siguiente comando para desplegar las VMs:
