@@ -1,4 +1,4 @@
-# Kubernetes RBAC Lab for CKA Certification
+# Control de Acceso Basado en Roles (RBAC) Lab 2 - CKA Course
 
 Este laboratorio está diseñado para practicar la configuración de permisos RBAC en Kubernetes, una de las habilidades clave para la certificación CKA. Role-Based Access Control (RBAC) permite controlar el acceso a los recursos del clúster mediante la asignación de permisos a roles, que luego se aplican a usuarios o ServiceAccounts. En este laboratorio, aprenderás a crear y asignar permisos específicos a través de roles y bindings en diferentes namespaces, asegurando un acceso controlado a los recursos en un clúster de Kubernetes.
 
