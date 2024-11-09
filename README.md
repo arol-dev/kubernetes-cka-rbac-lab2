@@ -1,6 +1,8 @@
 # Kubernetes RBAC Lab for CKA Certification
 
-Este laboratorio está diseñado para practicar la configuración de permisos RBAC en Kubernetes. Configuraremos roles y bindings en distintos namespaces y probaremos los permisos asociados.
+Este laboratorio está diseñado para practicar la configuración de permisos RBAC en Kubernetes, una de las habilidades clave para la certificación CKA. Role-Based Access Control (RBAC) permite controlar el acceso a los recursos del clúster mediante la asignación de permisos a roles, que luego se aplican a usuarios o ServiceAccounts. En este laboratorio, aprenderás a crear y asignar permisos específicos a través de roles y bindings en diferentes namespaces, asegurando un acceso controlado a los recursos en un clúster de Kubernetes.
+
+Sigue cada sección en el orden indicado para completar con éxito el laboratorio y afianzar tus conocimientos sobre RBAC en Kubernetes.
 
 ## Prerrequisitos
 
@@ -10,10 +12,13 @@ Este laboratorio está diseñado para practicar la configuración de permisos RB
 
 ## Objetivos
 
-1. **Comprender los elementos básicos de RBAC**: roles, bindings, permisos y namespaces.
-2. **Configurar certificados X.509** para la autenticación del usuario operador.
-3. **Crear y asociar roles específicos** para otorgar permisos limitados sobre los recursos.
-4. **Practicar el flujo de trabajo de configuración** de permisos de acceso, verificación de permisos y modificación de roles.
+1. **Configurar namespaces y ServiceAccounts**: Crear namespaces dedicados y verificar la existencia de ServiceAccounts predeterminadas.
+2. **Definir roles y permisos específicos**: Crear un Role que permita el acceso controlado a Pods y ConfigMaps en un namespace específico.
+3. **Aplicar bindings para asociar roles a ServiceAccounts**: Usar RoleBindings para asociar roles a ServiceAccounts en un namespace específico.
+4. **Configurar un ClusterRole para permisos a nivel de clúster**: Crear y asignar un ClusterRole que permita leer Secrets en todo el clúster.
+5. **Asociar roles de clúster a cuentas específicas mediante ClusterRoleBindings**: Usar ClusterRoleBindings para asignar permisos de clúster a ServiceAccounts en namespaces específicos.
+6. **Verificar permisos y limitaciones mediante pruebas prácticas**: Desplegar pods y realizar solicitudes HTTP para verificar los permisos aplicados, asegurando que las ServiceAccounts tengan acceso limitado a los recursos definidos.
+
 
 ## Contenido del Repositorio
 
@@ -272,7 +277,3 @@ curl localhost:8001/api/v1/secrets
 ```
 
 Deberías ver la lista de secrets definidos en el clúster de Kubernetes, lo cual confirma que el ClusterRole permite el acceso a nivel global para leer secrets.
-
-## Conclusión
-
-Has configurado exitosamente roles, rolebindings, clusterroles, y clusterrolebindings en Kubernetes y verificado los permisos en cada namespace.
